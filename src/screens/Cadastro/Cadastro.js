@@ -5,8 +5,14 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF'
-
+    backgroundColor: '#FFFFFF',
+    marginBottom: 50,
+    marginTop: 20,
+  },
+  scrollViewContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
   },
   logo: {
     marginBottom: 20,

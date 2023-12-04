@@ -72,7 +72,10 @@ export default function Login() {
             style={styles.container}
         >
             <View style={styles.container}>
-                <Image source={require('../../assets/images/EASYCOMPRAS.png')} style={styles.logo} />
+                <View style={styles.containerLogo}>
+                    <Text style={styles.titulo1}>EASY</Text>
+                    <Text style={styles.titulo2}>COMPRAS</Text>
+                </View>
 
                 <Text style={styles.titulo}>Login</Text>
 
