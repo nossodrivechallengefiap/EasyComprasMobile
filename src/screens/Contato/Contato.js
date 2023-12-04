@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     containerConteudo: {
-        padding: 30
+      padding: 200
     },
     input: {
         height: 50,
@@ -42,6 +42,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#F6F6F6',
       },
     input2: {
+        minHeight: 150,
         width: 350,
         borderColor: '#E8E8E8',
         borderWidth: 1,

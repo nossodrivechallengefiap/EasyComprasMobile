@@ -1,5 +1,5 @@
 import React, { useState } from  'react';
-import { Text, View, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, View, TextInput, Image, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { styles } from './Cadastro';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -86,12 +86,12 @@ export default function Registro() {
     };
 
     return (
-        <KeyboardAvoidingView
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+            <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.container}
         >
             <View style={styles.container}>
-                <Image source={require('../../assets/images/EASYCOMPRAS.png')} style={styles.logo} />
                 <Text style={styles.titulo}>Registre-se</Text>
 
                 <View>
@@ -234,6 +234,7 @@ export default function Registro() {
                     </TouchableOpacity>
                 </View>
             </View>
-        </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
+        </ScrollView>
     )
 }
