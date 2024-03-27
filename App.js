@@ -1,3 +1,4 @@
+import React from 'react';
 import { UsuariosProvider } from './src/context/UsuariosContext';
 import AppNavigator from './src/navigation/AppNavigator';
 

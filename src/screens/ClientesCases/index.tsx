@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import {styles} from './ClientesCases'
 import { Image } from "react-native-elements";
+import React from "react";
 
 export default function ClientesCases() {
     const empresasFicticias = [
