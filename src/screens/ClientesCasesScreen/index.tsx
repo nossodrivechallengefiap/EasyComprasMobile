@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
-import {styles} from './ClientesCases'
+import {styles} from './ClientesCasesScreen'
 import { Image } from "react-native-elements";
 import React from "react";
 
-export default function ClientesCases() {
+export default function ClientesCasesScreen() {
     const empresasFicticias = [
         "TechVision Solutions",
         "InovaCorp Services",

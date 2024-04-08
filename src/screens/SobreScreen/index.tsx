@@ -1,8 +1,8 @@
 import { TouchableOpacity, View, Image, Text } from "react-native";
-import { styles } from "./Sobre";
+import { styles } from "./SobreScreen";
 import React from "react";
 
-export default function Sobre() {
+export default function SobreScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.containerLogo}>

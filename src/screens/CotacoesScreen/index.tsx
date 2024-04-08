@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, Image } from "react-native";
 import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { styles } from "./Cotacoes";
+import { styles } from "./CotacoesScreen";
 
 interface Produto {
   produto: string;
@@ -14,7 +14,7 @@ interface Produto {
   dataCotacao: string;
 }
 
-export function Cotacoes() {
+export function CotacoesScreen() {
   const produtos = [
     {
       produto: "Mouse Logitec",

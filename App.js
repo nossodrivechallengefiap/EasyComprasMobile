@@ -1,11 +1,14 @@
 import React from 'react';
-import { UsuariosProvider } from './src/context/UsuariosContext';
-import AppNavigator from './src/navigation/AppNavigator';
+import { UsuariosProvider } from 'context/UsuariosContext';
+import TabNavigator from 'navigation/TabNavigator/Index';
+
+
+
 
 export default function App() {
   return (
     <UsuariosProvider>
-      <AppNavigator/>
+      <TabNavigator/>
     </UsuariosProvider>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { styles } from "./Contato";
+import { styles } from "./ContatoScreen";
 import {
   Text,
   View,
@@ -9,12 +9,9 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { HomeScreenNavigationProp } from "../../navigation/AppNavigator";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 
-export default function Contato() {
-  const navigation = useNavigation<HomeScreenNavigationProp>();
+export default function ContatoScreen({navigation}) {
   const [email, setEmail] = useState("");
   const [mensagem, setMensagem] = useState("");
 

@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
     titulo3: {
         fontSize: 35,
         fontWeight: 'bold',
-        top: -80
+        top: -80,
     },
     containerConteudo: {
         padding: 30

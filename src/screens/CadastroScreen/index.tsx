@@ -9,16 +9,16 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
-import { styles } from "./Cadastro";
+import { styles } from "./CadastroScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { RegistroScreenNavigationProp } from "../../navigation/AppNavigator";
+// import { RegistroScreenNavigationProp } from "../../navigation/AppNavigator";
 import { UsuariosProvider, useUsuarios } from "../../context/UsuariosContext";
 import Toast from "react-native-toast-message";
 import { CheckBox } from "react-native-elements";
 
-export default function Registro() {
-  const navigation = useNavigation<RegistroScreenNavigationProp>();
+export default function RegistroScreen({ navigation }) {
+  // const navigation = useNavigation<RegistroScreenNavigationProp>();
   const { adicionarUsuario } = useUsuarios();
 
   const [nome, setNome] = useState("");
