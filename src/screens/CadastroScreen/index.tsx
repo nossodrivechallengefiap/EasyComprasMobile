@@ -8,14 +8,19 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Alert,
 } from "react-native";
 import { styles } from "./CadastroScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-// import { RegistroScreenNavigationProp } from "../../navigation/AppNavigator";
 import { UsuariosProvider, useUsuarios } from "../../context/UsuariosContext";
 import Toast from "react-native-toast-message";
-import { CheckBox } from "react-native-elements";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../../../firebase-config";
 
 export default function RegistroScreen({ navigation }) {
   // const navigation = useNavigation<RegistroScreenNavigationProp>();
@@ -37,7 +42,66 @@ export default function RegistroScreen({ navigation }) {
   const [supervisor, setSupervisor] = useState(false);
   const [dependente, setDependente] = useState<[]>([]);
 
-  const handleRegistro = () => {
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // const handleRegistro = () => {
+  //   if (senha !== confirmarSenha) {
+  //     Toast.show({
+  //       type: "error",
+  //       position: "bottom",
+  //       text1: "Erro",
+  //       text2: "As senhas não coincidem",
+  //       visibilityTime: 3000,
+  //       autoHide: true,
+  //       topOffset: 50,
+  //     });
+  //     return;
+  //   }
+
+  //   createUserWithEmailAndPassword(auth, email, senha)
+  //     .then((userCredential) => {
+  //       Toast.show({
+  //         type: "success",
+  //         position: "bottom",
+  //         text1: `Parabens ${nome}! cadastro feito com sucesso`,
+  //         visibilityTime: 3000, // Tempo que o toast ficará visível (em milissegundos)
+  //         autoHide: true,
+  //         topOffset: 50, // Distância do topo da tela
+  //       });
+  //       navigation.navigate("Login");
+  //       const user = userCredential.user;
+  //       console.log("🚀 ~ .then ~ user:", user);
+  //     })
+  //     .catch((error) => {
+  //       Toast.show({
+  //         type: "error",
+  //         position: "bottom",
+  //         text1: "Erro",
+  //         text2: error,
+  //         visibilityTime: 3000,
+  //         autoHide: true,
+  //         topOffset: 50,
+  //       });
+  //     });
+
+  //   const novoUsuario = {
+  //     nome,
+  //     email,
+  //     senha,
+  //     supervisor,
+  //     dependente,
+  //   };
+
+  //   adicionarUsuario(novoUsuario);
+
+  //   setNome("");
+  //   setEmail("");
+  //   setSenha("");
+  //   setConfirmarSenha("");
+  // };
+
+  const handleRegistro = async () => {
     if (senha !== confirmarSenha) {
       Toast.show({
         type: "error",
@@ -51,31 +115,54 @@ export default function RegistroScreen({ navigation }) {
       return;
     }
 
-    const novoUsuario = {
-      nome,
-      email,
-      senha,
-      supervisor,
-      dependente,
-    };
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        senha
+      );
+      const user = userCredential.user;
 
-    adicionarUsuario(novoUsuario);
+      await AsyncStorage.setItem("user", JSON.stringify(user));
 
-    Toast.show({
-      type: "success",
-      position: "bottom",
-      text1: `Parabens ${nome}! cadastro feito com sucesso`,
-      visibilityTime: 3000, // Tempo que o toast ficará visível (em milissegundos)
-      autoHide: true,
-      topOffset: 50, // Distância do topo da tela
-    });
+      Toast.show({
+        type: "success",
+        position: "bottom",
+        text1: `Parabéns ${nome}! cadastro feito com sucesso`,
+        visibilityTime: 3000,
+        autoHide: true,
+        topOffset: 50,
+      });
 
-    setNome("");
-    setEmail("");
-    setSenha("");
-    setConfirmarSenha("");
+      // Alert.alert(`Parabéns ${nome}! cadastro feito com sucesso`);
 
-    navigation.navigate("Login");
+      navigation.navigate("Login");
+
+      const novoUsuario = {
+        nome,
+        email,
+        senha,
+        supervisor,
+        dependente,
+      };
+
+      adicionarUsuario(novoUsuario);
+
+      setNome("");
+      setEmail("");
+      setSenha("");
+      setConfirmarSenha("");
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: "Erro",
+        text2: error.message,
+        visibilityTime: 3000,
+        autoHide: true,
+        topOffset: 50,
+      });
+    }
   };
 
   const handleEntrar = () => {

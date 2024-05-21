@@ -7,33 +7,42 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from "react-native";
 import { styles } from "./Login";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-// import { HomeScreenNavigationProp } from "../../navigation/AppNavigator";
 import { useUsuarios } from "../../context/UsuariosContext";
 import Toast from "react-native-toast-message";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../../../firebase-config";
 
 const LoginStack = createNativeStackNavigator();
 
 export default function LoginScreen({ navigation }) {
-  // const navigation = useNavigation<HomeScreenNavigationProp>();
-
   const { usuarios } = useUsuarios();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
 
-  const handleLogin = () => {
-    // Adicione aqui a lógica para lidar com o registro
-    // Por exemplo, você pode validar os campos e fazer uma chamada à API para registrar o usuário
-    const usuarioEncontrado = usuarios.find(
-      (usuario) => usuario.email === email && usuario.senha === senha
-    );
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-    if (usuarioEncontrado) {
+  const handleLogin = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        senha
+      );
+      const user = userCredential.user;
+
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+
       Toast.show({
         type: "success",
         position: "bottom",
@@ -43,17 +52,16 @@ export default function LoginScreen({ navigation }) {
         topOffset: 50,
       });
 
-      navigation.navigate("Home");
+      // Alert.alert("Bem-vindo de volta!");
 
-      setEmail("");
-      setSenha("");
-    } else {
-      // Credenciais inválidas, exibe mensagem de erro
+      navigation.navigate("Home");
+    } catch (error) {
+      console.log("🚀 ~ handleLogin ~ error:", error);
       Toast.show({
         type: "error",
         position: "bottom",
         text1: "Erro de Login",
-        text2: "Credenciais inválidas. Verifique seu nome e senha.",
+        text2: error.message,
         visibilityTime: 5000,
         autoHide: true,
         topOffset: 50,
